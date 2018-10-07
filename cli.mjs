@@ -2,7 +2,7 @@ import repl from 'repl'
 // import vm   from 'vm'
 
 const replInstance = repl.start({ 
-	prompt          : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ : ` ,
+	prompt          : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  ` ,
 	useColors       : true ,
 	ignoreUndefined : true ,
 	useGlobal       : true ,
