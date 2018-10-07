@@ -1,5 +1,4 @@
 import repl from 'repl'
-// import vm   from 'vm'
 
 const replInstance = repl.start({ 
 	prompt          : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  ` ,
@@ -14,8 +13,7 @@ const replInstance = repl.start({
 		
 		let result = null
 		try {
-			result = await _eval(wrapped)
-			// result = await vm.runInThisContext(wrapped)
+			result = await context.eval(wrapped)
 		} catch(err){
 			result = await _eval(cmd)
 		}
@@ -24,20 +22,14 @@ const replInstance = repl.start({
 	}
 })
 
-const _eval = replInstance.context.eval
 
-
-
+/*
+ * Test random functions
+ */
 import fetch from 'node-fetch'
-replInstance.context.fetch = fetch
-replInstance.context.getJson = url => {
-	return fetch(url).then( r => { return r.json() })
-}
-replInstance.context.sleep = t => {
-	return new Promise(resolve => {
-		setTimeout(resolve, t*1000)	
-	})
-}
-
-replInstance.context.a = 1
-replInstance.context.test = (x=2) => { return 2*x }
+const ctx   = replInstance.context
+ctx.fetch   = fetch
+ctx.getJson = url => { return fetch(url).then( r => { return r.json() }) }
+ctx.sleep   = sec => { return new Promise(r => { setTimeout(r, sec*1000) }) }
+ctx.test    = arg => { return 2*(arg||2) }
+ctx.somevar = 1
