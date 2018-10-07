@@ -1,12 +1,11 @@
-// import vm    from 'vm'
-import repl  from 'repl'
-import fetch from 'node-fetch'
+import repl from 'repl'
+// import vm   from 'vm'
 
-let _eval
-const replInstance = repl.start({ prompt : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ : `,
-	useColors       : true,
-	ignoreUndefined : true,
-	useGlobal       : true,
+const replInstance = repl.start({ 
+	prompt          : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ : ` ,
+	useColors       : true ,
+	ignoreUndefined : true ,
+	useGlobal       : true ,
 
 	async eval(cmd, context, filename, callback) {
 		if (!cmd.trim()) { callback(null); return }
@@ -15,21 +14,24 @@ const replInstance = repl.start({ prompt : `(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ : `,
 		
 		let result = null
 		try {
-			result = await _eval(wrapped);
-			// result = await vm.runInThisContext(wrapped);
+			result = await _eval(wrapped)
+			// result = await vm.runInThisContext(wrapped)
 		} catch(err){
-			result = await _eval(cmd);
+			result = await _eval(cmd)
 		}
 
 		callback(null, result)
 	}
 })
-_eval = replInstance.context.eval
+let _eval = replInstance.context.eval
 
-replInstance.context.a = 1
-replInstance.context.test = (x=2) => { return 2*x }
+
+
+import fetch from 'node-fetch'
 
 replInstance.context.fetch = fetch
-replInstance.context.getJson = function(url){
-	return fetch(url).then(r=>{ return r.json() })
+replInstance.context.getJson = url => {
+	return fetch(url).then( r => { return r.json() })
 }
+replInstance.context.a = 1
+replInstance.context.test = (x=2) => { return 2*x }
