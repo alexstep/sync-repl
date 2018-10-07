@@ -23,7 +23,8 @@ const replInstance = repl.start({
 		callback(null, result)
 	}
 })
-let _eval = replInstance.context.eval
+
+const _eval = replInstance.context.eval
 
 
 
