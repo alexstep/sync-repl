@@ -29,10 +29,15 @@ const _eval = replInstance.context.eval
 
 
 import fetch from 'node-fetch'
-
 replInstance.context.fetch = fetch
 replInstance.context.getJson = url => {
 	return fetch(url).then( r => { return r.json() })
 }
+replInstance.context.sleep = t => {
+	return new Promise(resolve => {
+		setTimeout(resolve, t*1000)	
+	})
+}
+
 replInstance.context.a = 1
 replInstance.context.test = (x=2) => { return 2*x }
