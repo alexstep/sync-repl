@@ -15,7 +15,7 @@ const replInstance = repl.start({
 		try {
 			result = await context.eval(wrapped)
 		} catch(err){
-			result = await _eval(cmd)
+			result = await context.eval(cmd)
 		}
 
 		callback(null, result)
